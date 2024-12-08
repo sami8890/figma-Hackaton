@@ -109,48 +109,45 @@ body {
   color: white;
 }
 @media (max-width: 768px) {
+  .heroImage {
+    position: relative;
+    height: auto;
+  }
+
   .heroText {
-    width: 90%; /* Adapt width for smaller screens */
-    padding: 2rem; /* Slightly increased padding for balance */
-    /* top: auto; */
-    left: 50%;
-    transform: translate(-50%, 0); /* Center horizontally */
-    bottom: 1.5rem; /* Adjust position closer to the bottom */
+    position: relative !important;
+    top: 0 !important;
+    left: 0 !important;
+    transform: none !important;
+    width: 90% !important;
+    margin: 20px auto !important;
+    padding: 2rem !important;
     text-align: center;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
 
   .heroText h6 {
-    font-size: 1rem; /* Consistent size */
-    letter-spacing: 0.05rem; /* Slightly spaced letters for clarity */
-    margin-bottom: 0.5rem; /* Add spacing under subheading */
+    text-align: center;
+    font-size: 1rem;
   }
 
   .heroText h3 {
-    font-size: 1.75rem; /* Smaller but impactful size */
-    line-height: 2.25rem; /* Maintain spacing for readability */
-    letter-spacing: 0.03rem; /* Subtle letter spacing for headlines */
+    font-size: 1.75rem !important;
+    text-align: center;
+    margin-bottom: 1rem;
   }
 
   .heroText p {
-    font-size: 0.85rem; /* Slightly smaller text */
-    line-height: 1.4rem; /* Maintain compactness */  }
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
 
   .heroText .buyBtn {
-    padding: 0.65rem 1.75rem; /* Larger button for tap targets */
-    font-size: 1rem;
-    background-color: #ff5722; /* Ensure visibility */
-    color: white;
-    border-radius: 4px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Hover effects */
-  }
-
-  .heroText .buyBtn:hover {
-    background-color: #e64a19; /* Darker hover color */
-    transform: scale(1.05); /* Slight scale for feedback */
-  }
-
-  .heroImage img {
-    max-height: 400px; /* Prevent overly large image heights */
-    object-fit: cover; /* Keep the image focus */
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+    padding: 0.75rem 2rem !important;
   }
 }

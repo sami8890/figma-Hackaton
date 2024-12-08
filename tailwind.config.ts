@@ -10,12 +10,19 @@ export default {
   theme: {
   	extend: {
   		colors: {
+				colors: {
+					palePeach: "#FFF1E0",
+					mustard: "#AE772C",
+					mustardDark: "#915F20",
+				},
+				
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
   			},
+  			
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
   				foreground: 'hsl(var(--popover-foreground))'
