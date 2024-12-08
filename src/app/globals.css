@@ -6,6 +6,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+
+
+
+
+ 
+
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -68,5 +75,109 @@ body {
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+.navbar{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem 1rem 2rem ;
+
+}
+
+.navbar .head{
+  display: flex;
+  /* justify-content: space-between;
+  align-items: center; */
+  gap: 2rem;
+}
+
+.navbar .icons{
+  display: flex;
+  /* justify-content: space-between;
+  align-items: center; */
+  gap: 2rem;
+
+}
+
+ /* ---------------------- HERO SECTION ----------------------------------- */
+
+
+.heroText{
+  width: 34rem;
+  /* height: 16rem; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 6px;
+  padding: 4rem;
+  line-height: 2rem;
+}
+
+.heroText h6{
+  font-weight: bold;
+}
+
+.heroText h3{
+  font-size: 2.5rem;
+  font-weight: bolder;
+  color: #B88E2F;
+}
+
+/* .heroText p{
+  line-height: none;
+} */
+
+.heroText .buyBtn{
+  background-color: #B88E2F;
+  padding: 0.5rem 3rem 0.5rem 3rem;
+  color: white;
+}
+/* -------------------------change it later  */
+@media (max-width: 768px) {
+  .heroText {
+    width: 90%; /* Adapt width for smaller screens */
+    padding: 2rem; /* Slightly increased padding for balance */
+    /* top: auto; */
+    left: 50%;
+    transform: translate(-50%, 0); /* Center horizontally */
+    bottom: 1.5rem; /* Adjust position closer to the bottom */
+    text-align: center;
+  }
+
+  .heroText h6 {
+    font-size: 1rem; /* Consistent size */
+    letter-spacing: 0.05rem; /* Slightly spaced letters for clarity */
+    margin-bottom: 0.5rem; /* Add spacing under subheading */
+  }
+
+  .heroText h3 {
+    font-size: 1.75rem; /* Smaller but impactful size */
+    line-height: 2.25rem; /* Maintain spacing for readability */
+    letter-spacing: 0.03rem; /* Subtle letter spacing for headlines */
+  }
+
+  .heroText p {
+    font-size: 0.85rem; /* Slightly smaller text */
+    line-height: 1.4rem; /* Maintain compactness */  }
+
+  .heroText .buyBtn {
+    padding: 0.65rem 1.75rem; /* Larger button for tap targets */
+    font-size: 1rem;
+    background-color: #ff5722; /* Ensure visibility */
+    color: white;
+    border-radius: 4px;
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Hover effects */
+  }
+
+  .heroText .buyBtn:hover {
+    background-color: #e64a19; /* Darker hover color */
+    transform: scale(1.05); /* Slight scale for feedback */
+  }
+
+  .heroImage img {
+    max-height: 400px; /* Prevent overly large image heights */
+    object-fit: cover; /* Keep the image focus */
   }
 }
