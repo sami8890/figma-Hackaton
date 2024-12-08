@@ -6,7 +6,6 @@ import Link from "next/link";
 
 export default function Hero() {
   const heroImageRef = useRef(null);
-  const heroTextRef = useRef(null);
 
   useEffect(() => {
     gsap.fromTo(
@@ -25,7 +24,7 @@ export default function Hero() {
         y: 0,
         duration: 0.8,
         ease: "power3.out",
-        stagger: 0.8, 
+        stagger: 0.2,
       }
     );
   }, []);

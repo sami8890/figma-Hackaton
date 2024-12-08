@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Head from "next/head";
 import Carousel from "@/components/ui/carousel";
 import { gsap } from 'gsap';
@@ -8,6 +8,7 @@ import { TextPlugin } from 'gsap/dist/TextPlugin';
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger, TextPlugin);
+
 
 export default function Home() {
   // Refs for animating elements
@@ -18,9 +19,7 @@ export default function Home() {
   const mainSectionRef = useRef(null);
   const headerRef = useRef(null);
 
-  // State for typing effect
-  const [displayText, setDisplayText] = useState('');
-
+  
   useEffect(() => {
     // Cursor effect
     const cursor = gsap.to('.cursor', {
