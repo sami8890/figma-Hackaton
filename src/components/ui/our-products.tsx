@@ -3,11 +3,14 @@ import { FaShareAlt, FaHeart, FaShoppingCart } from 'react-icons/fa';
 
 const ProductGrid = () => {
     const products = [
-        { id: 1, name: 'Syltherine', description: 'Stylish chair', price: 'Rp 2,500,000', originalPrice: 'Rp 3,000,000', image: '/images/product1.jpg', badge: '-30%', isNew: false },
-        { id: 2, name: 'Leviosa', description: 'Stylish sofa chair', price: 'Rp 2,500,000', image: '/images/product2.jpg', badge: '', isNew: false },
-        { id: 3, name: 'Lolito', description: 'Luxury big sofa', price: 'Rp 7,000,000', originalPrice: 'Rp 14,000,000', image: '/images/product3.jpg', badge: '-50%', isNew: false },
-        { id: 4, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/images/product4.jpg', badge: '', isNew: true },
-        // Add more products as needed...
+        { id: 1, name: 'Syltherine', description: 'Stylish chair', price: 'Rp 2,500,000', originalPrice: 'Rp 3,000,000', image: '/our-products/first.png', badge: '-30%', isNew: false },
+        { id: 2, name: 'Leviosa', description: 'Stylish sofa chair', price: 'Rp 2,500,000', image: '/our-products/second.png', badge: '', isNew: false },
+        { id: 3, name: 'Lolito', description: 'Luxury big sofa', price: 'Rp 7,000,000', originalPrice: 'Rp 14,000,000', image: '/our-products/third.png', badge: '-50%', isNew: false },
+        { id: 4, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/our-products/fourth.png', badge: '', isNew: true },
+        { id: 5, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/our-products/fifth.png', badge: '-39%', isNew: false },
+        { id: 6, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/our-products/sixth.png', badge: '', isNew: true },
+        { id: 7, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/our-products/seventh.png', badge: '', isNew: false },
+        { id: 8, name: 'Respira', description: 'Outdoor bar table and stool', price: 'Rp 500,000', image: '/our-products/eight.png', badge: '', isNew: true },
     ];
 
     return (
@@ -21,7 +24,7 @@ const ProductGrid = () => {
                     >
                         {/* Product Image */}
                         <div className="relative">
-                            <img src={product.image} alt={product.name} className="w-full h-60 object-cover" />
+                            <img src={product.image} alt={product.name} className="w-full h-72 object-cover" />
                             {/* Badges */}
                             {product.badge && (
                                 <span className="absolute top-3 left-3 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-full">
