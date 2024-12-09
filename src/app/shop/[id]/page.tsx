@@ -1,16 +1,22 @@
+// src/app/shop/[id]/page.tsx
 'use client'
 
-import { useState, use } from "react"
+import { useState, useEffect, useRef } from "react"
 import { notFound } from "next/navigation"
 import Image from "next/image"
+import Link from "next/link"
 import { Star, Minus, Plus, Facebook, Twitter, Instagram } from 'lucide-react'
+// import gsap from 'gsap'
+
 import { Button } from "@/components/ui/button"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Label } from "@/components/ui/label"
-import Link from "next/link"
 import { toast } from "@/hooks/use-toast"
+import { useCart } from "@/app/shop/cart-context"
+import { use } from 'react';
 
-// This would typically come from your database or API
+
+
 const getProduct = (id: string) => {
     const products = [
         {
@@ -22,6 +28,7 @@ const getProduct = (id: string) => {
             reviews: 12,
             sku: "CH001",
             category: "Chairs",
+            stock: 10,
             tags: ["Chair", "Stylish", "Office", "Home"],
             sizes: ["S", "M", "L"],
             colors: ["#FF5733", "#C70039", "#900C3F"],
@@ -176,6 +183,7 @@ const getProduct = (id: string) => {
 export default function ProductPage({ params: paramsPromise }: { params: Promise<{ id: string }> }) {
     const params = use(paramsPromise)
     const product = getProduct(params.id)
+    const { addToCart } = useCart() 
 
     if (!product) {
         notFound()
@@ -191,6 +199,16 @@ export default function ProductPage({ params: paramsPromise }: { params: Promise
     }
 
     const handleAddToCart = () => {
+        addToCart({
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            quantity: quantity,
+            size: selectedSize,
+            color: selectedColor,
+            image: mainImage
+        })
+
         toast({
             title: "Added to cart",
             description: `${quantity} x ${product.name} (${selectedSize}, ${selectedColor}) added to your cart.`,
@@ -251,8 +269,8 @@ export default function ProductPage({ params: paramsPromise }: { params: Promise
                                 <Star
                                     key={i}
                                     className={`w-5 h-5 ${i < Math.floor(product.rating)
-                                            ? "fill-primary text-primary"
-                                            : "fill-muted text-muted-foreground"
+                                        ? "fill-primary text-primary"
+                                        : "fill-muted text-muted-foreground"
                                         }`}
                                 />
                             ))}
@@ -352,4 +370,3 @@ export default function ProductPage({ params: paramsPromise }: { params: Promise
         </div>
     )
 }
-
