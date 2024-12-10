@@ -78,17 +78,18 @@ body {
   }
 }
 
- /* ---------------------- HERO SECTION ----------------------------------- */
+
 
 
 .heroText{
-  width: 34rem;
+  width: 30rem;
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 45%;
+  left: 55%;
   border-radius: 6px;
-  padding: 4rem;
+  padding: 3.5rem;
   line-height: 2rem;
+
 }
 
 .heroText h6{
@@ -101,9 +102,7 @@ body {
   color: #B88E2F;
 }
 
-
-
-.heroText .buyBtn{
+.heroText .Button{
   background-color: #B88E2F;
   padding: 0.5rem 3rem 0.5rem 3rem;
   color: white;
@@ -116,16 +115,16 @@ body {
   }
 
   .heroText {
-    position: relative !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    width: 90% !important;
-    margin: 20px auto !important;
-    padding: 2rem !important;
+    position: relative ;
+    top: 0 ;
+    left: 0 ;
+    transform: none ;
+    width: 90% ;
+    margin: 20px auto ;
+    padding: 2rem ;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   }
 
   .heroText h6 {
@@ -134,7 +133,7 @@ body {
   }
 
   .heroText h3 {
-    font-size: 1.75rem !important;
+    font-size: 1.75rem ;
     text-align: center;
     margin-bottom: 1rem;
   }
@@ -144,11 +143,11 @@ body {
     margin-bottom: 1.5rem;
   }
 
-  .heroText .buyBtn {
+  .heroText .Button {
     display: block;
     width: 100%;
     max-width: 300px;
     margin: 0 auto;
-    padding: 0.75rem 2rem !important;
+    padding: 0.75rem 2rem ;
   }
 }

@@ -47,7 +47,7 @@ export default function Hero() {
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
             dolore
           </p>
-          <button className="buyBtn">
+          <button className="Button">
             <Link href="/shop">BUY NOW</Link>
           </button>
         </div>

@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCart } from "@/app/shop/cart-context"; // Adjust path as needed
 
 export default function ShoppingCart() {
-    const { cartItems, removeFromCart, updateQuantity } = useCart()
+    const { cartItems, removeFromCart  } = useCart()
 
     const subtotal = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,

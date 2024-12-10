@@ -16,6 +16,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import Banner from "@/components/ui/banner";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
@@ -212,37 +213,17 @@ const ShopSection: React.FC = () => {
   return (
     <section>
       {/* Banner Section */}
-      <div ref={bannerRef} className="relative h-[300px]">
-        <Image
-          src="/shop/image.png"
-          alt="Shop Banner"
-          fill
-          className="object-cover"
+      <div>
+        <Banner 
+          backgroundImage="/shop/image.png"
+          title="Shop"
+          breadcrumbs={[
+            { label: "Home", href: "/" },
+            { label: "Shop" },
+          ]}
         />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-black">
-          <h1 ref={headingRef} className="text-4xl font-bold">Shop</h1>
-          <div className="flex items-center text-sm mt-4">
-            <Link href="/" className="hover:underline">
-              Home
-            </Link>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-4 w-4 mx-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-            <span>Shop</span>
-          </div>
-        </div>
-      </div>
+      </div> 
+
 
       {/* Filter Section */}
       <ProductFilter />

@@ -1,72 +1,93 @@
-// components/ProductFilter.tsx
-import React, { useState } from 'react';
+import React from 'react';
 
-const ProductFilter: React.FC = () => {
-    const [priceRange, setPriceRange] = useState([0, 10000]);
-    const [category, setCategory] = useState('all');
-    const [brand, setBrand] = useState('all');
-
+const FilterSection: React.FC = () => {
     return (
-        <div className="bg-gray-100 py-6 px-4">
-            <h3 className="text-lg font-bold mb-4">Filter</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                {/* Price Range */}
-                <div>
-                    <label htmlFor="price-range" className="block font-medium mb-2">
-                        Price Range
-                    </label>
-                    <div className="flex items-center">
-                        <input
-                            type="range"
-                            min="0"
-                            max="10000"
-                            step="100"
-                            id="price-range"
-                            className="w-full"
-                            value={priceRange[1]}
-                            onChange={(e) =>
-                                setPriceRange([0, parseInt(e.target.value)])
-                            }
-                        />
-                        <span className="ml-4 text-sm">
-                            ₹{priceRange[0]} - ₹{priceRange[1]}
-                        </span>
-                    </div>
-                </div>
-
-                {/* Category */}
-                <div>
-                    <label htmlFor="category" className="block font-medium mb-2">
-                        Category
-                    </label>
-                    <select
-                        id="category"
-                        className="w-full"
-                        value={category}
-                        onChange={(e) => setCategory(e.target.value)}
+        <div className="bg-[#fdf6ef] flex justify-between items-center p-4 border-b border-gray-200">
+            {/* Left Section - Filter */}
+            <div className="flex items-center space-x-2">
+                <button className="flex items-center gap-2 bg-white text-black border border-gray-300 px-4 py-2 rounded-md shadow-sm hover:bg-gray-100 transition">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth="2"
+                        stroke="currentColor"
+                        className="w-5 h-5"
                     >
-                        <option value="all">All</option>
-                        <option value="furniture">Furniture</option>
-                        <option value="decor">Decor</option>
-                        <option value="lighting">Lighting</option>
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 12v6a1 1 0 01-.553.894l-4 2A1 1 0 019 20v-8L3.293 6.707A1 1 0 013 6V4z"
+                        />
+                    </svg>
+                    <span>Filter</span>
+                </button>
+
+                {/* View Icons */}
+                <div className="flex items-center gap-4">
+                    <button className="p-2 rounded-md hover:bg-gray-100">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                            className="w-5 h-5 text-black"
+                        >
+                            <circle cx="6" cy="6" r="2" />
+                            <circle cx="12" cy="6" r="2" />
+                            <circle cx="18" cy="6" r="2" />
+                            <circle cx="6" cy="12" r="2" />
+                            <circle cx="12" cy="12" r="2" />
+                            <circle cx="18" cy="12" r="2" />
+                        </svg>
+                    </button>
+                    <button className="p-2 rounded-md hover:bg-gray-100">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth="2"
+                            stroke="currentColor"
+                            className="w-5 h-5 text-black"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M4 6h16M4 10h16M4 14h16M4 18h16"
+                            />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            {/* Center Section - Pagination */}
+            <p className="text-gray-600 text-sm">
+                Showing <span className="font-semibold">1–16</span> of{' '}
+                <span className="font-semibold">32</span> results
+            </p>
+
+            {/* Right Section - Controls */}
+            <div className="flex items-center gap-4">
+                {/* Show Dropdown */}
+                <div className="flex items-center space-x-2">
+                    <span className="text-gray-600 text-sm">Show</span>
+                    <select className="border border-gray-300 rounded-md px-3 py-1 text-gray-600">
+                        <option value="16" selected>
+                            16
+                        </option>
+                        <option value="32">32</option>
+                        <option value="48">48</option>
                     </select>
                 </div>
 
-                {/* Brand */}
-                <div>
-                    <label htmlFor="brand" className="block font-medium mb-2">
-                        Brand
-                    </label>
-                    <select
-                        id="brand"
-                        className="w-full"
-                        value={brand}
-                        onChange={(e) => setBrand(e.target.value)}
-                    >
-                        <option value="all">All</option>
-                        <option value="brand1">Brand 1</option>
-                        <option value="brand2">Brand 2</option>
-                        <option value="brand3">Brand 3</option>
+                {/* Sort Dropdown */}
+                <div className="flex items-center space-x-2">
+                    <span className="text-gray-600 text-sm">Short by</span>
+                    <select className="border border-gray-300 rounded-md px-3 py-1 text-gray-600">
+                        <option value="default" selected>
+                            Default
+                        </option>
+                        <option value="price">Price</option>
+                        <option value="rating">Rating</option>
                     </select>
                 </div>
             </div>
@@ -74,4 +95,4 @@ const ProductFilter: React.FC = () => {
     );
 };
 
-export default ProductFilter;
+export default FilterSection;

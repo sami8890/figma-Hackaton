@@ -51,7 +51,7 @@ export default function CartPage() {
       <div className="container mx-auto px-4 py-16 text-center" ref={cartRef}>
         <h2 className="text-2xl font-bold mb-4">Your Cart is Empty</h2>
         <p className="text-gray-600 mb-8">
-          Looks like you haven't added any items to your cart yet.
+          Looks like you haven&apos;t added any items to your cart yet.
         </p>
         <Link href="/shop">
           <Button className="bg-primary hover:bg-primary/90">
@@ -73,7 +73,10 @@ export default function CartPage() {
           {cartItems.map((item, index) => (
             <div
               key={`${item.id}-${item.size}-${item.color}`}
-              ref={(el) => (itemsRef.current[index] = el)}
+              ref={(el) => {
+                itemsRef.current[index] = el;
+                return void 0;
+              }}
               className="flex items-center gap-4 bg-white p-4 rounded-lg shadow-sm"
             >
               <div className="relative w-24 h-24">

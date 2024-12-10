@@ -3,9 +3,25 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import Banner from "@/components/ui/banner";
+import WhyChooseUs from "@/components/ui/why-choose-us";
 
 export default function ContactPage() {
   return (
+    <section>
+     <div>
+      <Banner
+        backgroundImage="/shop/image.png"
+        title="Contact"
+        breadcrumbs={[
+          { label: "Home", href: "/" },
+          { label: "Contact" },
+        ]}
+        logo="/navbar-logo.png" 
+      />
+    </div>
+
+
     <div className="container mx-auto px-4 py-16 max-w-6xl bg-gray-200">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold mb-4">Get In Touch With Us</h1>
@@ -99,6 +115,8 @@ export default function ContactPage() {
           </form>
         </div>
       </div>
+        <WhyChooseUs/>
     </div>
+    </section>
   );
 }
