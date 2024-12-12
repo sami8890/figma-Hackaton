@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import Banner from "@/components/ui/banner";
-import WhyChooseUs from "@/components/ui/why-choose-us";
+import FeaturesSection from "@/components/ui/why-choose-us";
 
 export default function ContactPage() {
   return (
@@ -115,7 +115,7 @@ export default function ContactPage() {
           </form>
         </div>
       </div>
-        <WhyChooseUs/>
+        <FeaturesSection/>
     </div>
     </section>
   );

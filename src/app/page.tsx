@@ -2,6 +2,7 @@ import BrowseTheImage from "@/components/ui/browse-by-cat";
 import Hero from "../components/ui/hero";
 import Products from "@/components/ui/our-products";
 import Rooms from "@/components/ui/beautifull-romms";
+import FeaturesSection from "@/components/ui/why-choose-us";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
       <BrowseTheImage/>
       <Products/>
       <Rooms/>
+      <FeaturesSection/>
     </section>
   );
 }
