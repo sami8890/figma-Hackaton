@@ -1,7 +1,7 @@
 // src/app/shop/[id]/page.tsx
 "use client";
 
-import { useState  } from "react";
+import { useState } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { toast } from "@/hooks/use-toast";
-import { useCart } from "@/app/shop/cart-context";
 import { use } from "react";
 
 const getProduct = (id: string) => {
@@ -191,7 +190,6 @@ export default function ProductPage({
 }) {
   const params = use(paramsPromise);
   const product = getProduct(params.id);
-  const { addToCart } = useCart();
 
   if (!product) {
     notFound();
@@ -205,23 +203,7 @@ export default function ProductPage({
   const handleQuantityChange = (amount: number) => {
     setQuantity((prev) => Math.max(1, prev + amount));
   };
-
-  const handleAddToCart = () => {
-    addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      quantity: quantity,
-      size: selectedSize,
-      color: selectedColor,
-      image: mainImage,
-    });
-
-    toast({
-      title: "Added to cart",
-      description: `${quantity} x ${product.name} (${selectedSize}, ${selectedColor}) added to your cart.`,
-    });
-  };
+ 
 
   const handleCompare = () => {
     toast({
@@ -360,9 +342,9 @@ export default function ProductPage({
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
-            <Button size="lg" onClick={handleAddToCart}>
-              Add to Cart
-            </Button>
+            <Link href="/shop/checkout">
+              <Button>Add to Cart</Button>
+            </Link>
             <Button variant="outline" size="lg" onClick={handleCompare}>
               Compare
             </Button>
@@ -401,3 +383,4 @@ export default function ProductPage({
     </div>
   );
 }
+
