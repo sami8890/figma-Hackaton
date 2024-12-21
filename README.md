@@ -37,4 +37,10 @@ Here’s a quick overview of the pages:
 
 ---
 
-Furniro is a project I’m really proud of. It’s built with modern tools to create an e-commerce experience that’s both functional and visually appealing.  
+This is my first ever production ready website 
+This project showcases the skill of combining Next.js, Tailwind CSS, and GSAP. 
+
+
+
+
+
