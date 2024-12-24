@@ -1,10 +1,11 @@
 "use client";
-
 import React, { useState } from "react";
-import { FiUser, FiSearch, FiHeart, FiShoppingCart, FiX } from "react-icons/fi";
+import { FiUser, FiSearch, FiHeart, FiX } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu } from "lucide-react";
+import { CartMenu } from "@/app/context/cart-menu";
+import { useCart } from "@/app/context/cart-context";
 
 import {
   Sheet,
@@ -16,7 +17,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-// Navigation links type and data
+// Navigation links
 interface NavLink {
   href: string;
   label: string;
@@ -31,7 +32,9 @@ const NAV_LINKS: NavLink[] = [
 
 const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  useCart();
 
+  // Toggle search input visibility
   const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
 
   return (
@@ -91,16 +94,12 @@ const Navbar: React.FC = () => {
               />
               <FiUser className="text-black text-xl cursor-pointer hover:text-orange-500 transition-colors" />
               <FiHeart className="text-black text-xl cursor-pointer hover:text-orange-500 transition-colors" />
-              <div className="relative">
-                <FiShoppingCart className="text-black text-xl cursor-pointer hover:text-orange-500 transition-colors" />
-                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                  0
-                </span>
-              </div>
+              {/* Single Cart Menu */}
+              <CartMenu />
             </div>
           )}
 
-          {/* Mobile Menu Trigger */}
+          {/* Mobile Menu */}
           <Sheet>
             <SheetTrigger asChild className="md:hidden">
               <Button variant="outline" size="icon">
@@ -122,6 +121,7 @@ const Navbar: React.FC = () => {
                 </div>
               </SheetHeader>
 
+              {/* Mobile Navigation Links */}
               <nav className="flex flex-col space-y-4">
                 {NAV_LINKS.map((link) => (
                   <Link
@@ -138,12 +138,7 @@ const Navbar: React.FC = () => {
               <div className="mt-6 flex justify-center space-x-6">
                 <FiUser className="text-2xl cursor-pointer hover:text-orange-500" />
                 <FiHeart className="text-2xl cursor-pointer hover:text-orange-500" />
-                <div className="relative">
-                  <FiShoppingCart className="text-2xl cursor-pointer hover:text-orange-500" />
-                  <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center">
-                    0
-                  </span>
-                </div>
+                <CartMenu />
               </div>
             </SheetContent>
           </Sheet>
