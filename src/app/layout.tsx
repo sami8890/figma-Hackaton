@@ -32,12 +32,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100  tracking-tight`}
       >
+        <main className="wrapper">
         <CartProvider>
           <Navbar />
           {children}
           <Toaster />
           <Footer />
         </CartProvider>
+        </main>
       </body>
     </html>
   );
