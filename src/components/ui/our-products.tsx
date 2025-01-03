@@ -114,7 +114,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             {/* Hover Overlay */}
             <div className="hover-overlay absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300">
                 {/* Add to Cart Button */}
-                <button className="bg-orange-500 text-white font-medium px-6 py-2 rounded-lg mb-3 flex items-center gap-2 hover:bg-orange-600 transition">
+                <button className="bg-white text-orange-600 font-medium px-6 py-2 rounded-lg mb-3 flex items-center gap-2 hover:bg-orange-600 hover:text-white transition">
                     <FaShoppingCart />
                     <Link href="/shop">Add to Cart</Link>
                 </button>
@@ -136,7 +136,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 };
 
 // Main Product Grid Component
-const ProductGrid: React.FC = () => {
+const OurProducts: React.FC = () => {
     const products: Product[] = [
         { id: 1, name: 'Syltherine', description: 'Stylish chair', price: 'Rp 2,500,000', originalPrice: 'Rp 3,000,000', image: '/our-products/first.png', badge: '-30%', isNew: false },
         { id: 2, name: 'Leviosa', description: 'Stylish sofa chair', price: 'Rp 2,500,000', image: '/our-products/second.png', badge: '', isNew: false },
@@ -213,4 +213,4 @@ const ProductGrid: React.FC = () => {
     );
 };
 
-export default ProductGrid;
+export default OurProducts;

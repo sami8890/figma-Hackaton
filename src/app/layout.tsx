@@ -5,6 +5,7 @@ import Navbar from "../components/layout/navbar";
 import Footer from "@/components/layout/footer";
 import { CartProvider } from "@/app/context/cart-context";
 import { Toaster } from "@/components/ui/toaster";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,12 +34,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100  tracking-tight`}
       >
         <main className="wrapper">
-        <CartProvider>
-          <Navbar />
-          {children}
-          <Toaster />
-          <Footer />
-        </CartProvider>
+          <ClerkProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+              <Toaster />
+              <Footer />
+            </CartProvider>
+          </ClerkProvider>
         </main>
       </body>
     </html>
