@@ -6,6 +6,9 @@ import Footer from "@/components/layout/footer";
 import { CartProvider } from "@/app/context/cart-context";
 import { Toaster } from "@/components/ui/toaster";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Inter } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -31,7 +34,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100  tracking-tight`}
+        className={`${inter.className} ${geistSans.variable} ${geistMono.variable} antialiased  bg-gray-100  tracking-tight`}
       >
         <main className="wrapper">
           <ClerkProvider>
