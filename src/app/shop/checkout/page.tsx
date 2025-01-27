@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { useCart } from "@/app/context/cart-context"; // Adjust import based on your structure
+import { useCart } from "@/app/context/cart-context";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -258,6 +258,14 @@ export default function BillingForm() {
           <div className="space-y-8 bg-gray-50 p-8 rounded-lg">
             <div className="space-y-6">
               <h3 className="text-sm font-medium text-gray-900">Product</h3>
+              {cart.items.map((item) => (
+                <div key={item.id} className="flex justify-between items-center">
+                  <span className="text-sm text-gray-600">{item.name} x {item.quantity}</span>
+                  <span className="text-sm text-gray-900">
+                    Rs. {(item.realPrice * item.quantity).toFixed(2)}
+                  </span>
+                </div>
+              ))}
               <div className="flex justify-between items-center border-b border-gray-200 pb-4">
                 <span className="text-sm text-gray-600">Subtotal</span>
                 <span className="text-sm text-gray-900">
@@ -298,3 +306,4 @@ export default function BillingForm() {
     </section>
   );
 }
+

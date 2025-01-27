@@ -18,7 +18,7 @@ export default function Footer() {
                     <h4 className="font-bold text-lg text-gray-400 mb-4">Links</h4>
                     <ul className="space-y-2">
                         <li className="text-black hover:underline cursor-pointer">Home</li>
-                        <li className="text-black hover:underline cursor-pointer">Shop</li>
+                        <li className="text-black hover:underline cursor-pointer ">Shop</li>
                         <li className="text-black hover:underline cursor-pointer">About</li>
                         <li className="text-black hover:underline cursor-pointer">Contact</li>
                     </ul>

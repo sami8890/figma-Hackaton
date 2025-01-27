@@ -12,8 +12,8 @@ export default function Home() {
       <BrowseTheImage/>
       <Products/>
       <Rooms/>
-     <GallerySection/>
-      <FeaturesSection/>
+      <GallerySection/>
+      {/* <FeaturesSection/> */}
     </section>
   );
 }

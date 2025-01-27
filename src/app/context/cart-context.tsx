@@ -1,14 +1,13 @@
-// src/app/context/cart-context.tsx
 "use client";
 
 import React, { createContext, useContext, useReducer, useEffect } from "react";
 import { toast } from "@/hooks/use-toast";
 
-// Types
-interface CartItem {
+export interface CartItem {
   id: string;
   name: string;
   price: number;
+  realPrice: number;
   quantity: number;
   size: string;
   color: string;
@@ -36,18 +35,18 @@ interface CartContextType {
   clearCart: () => void;
 }
 
-// Initial state
 const initialState: CartState = {
   items: [],
   totalItems: 0,
   totalAmount: 0,
 };
 
-// Create context
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Reducer function
 export function cartReducer(state: CartState, action: CartAction): CartState {
+  const recalculateTotalAmount = (items: CartItem[]): number => {
+    return items.reduce((total, item) => total + item.realPrice * item.quantity, 0);
+  };
   switch (action.type) {
     case "ADD_ITEM": {
       const existingItemIndex = state.items.findIndex(
@@ -65,8 +64,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
           ...state,
           items: updatedItems,
           totalItems: state.totalItems + action.payload.quantity,
-          totalAmount:
-            state.totalAmount + action.payload.price * action.payload.quantity,
+          totalAmount: recalculateTotalAmount(updatedItems),
         };
       }
 
@@ -74,8 +72,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: [...state.items, action.payload],
         totalItems: state.totalItems + action.payload.quantity,
-        totalAmount:
-          state.totalAmount + action.payload.price * action.payload.quantity,
+        totalAmount: recalculateTotalAmount([...state.items, action.payload]),
       };
     }
 
@@ -89,10 +86,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: state.items.filter((item) => item.id !== action.payload),
         totalItems: Math.max(0, state.totalItems - itemToRemove.quantity),
-        totalAmount: Math.max(
-          0,
-          state.totalAmount - itemToRemove.price * itemToRemove.quantity
-        ),
+        totalAmount: recalculateTotalAmount(state.items.filter((item) => item.id !== action.payload)),
       };
     }
 
@@ -111,10 +105,7 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: updatedItems,
         totalItems: Math.max(0, state.totalItems + quantityDiff),
-        totalAmount: Math.max(
-          0,
-          state.totalAmount + updatedItems[itemIndex].price * quantityDiff
-        ),
+        totalAmount: recalculateTotalAmount(updatedItems),
       };
     }
 
@@ -123,10 +114,8 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
 
     case "LOAD_CART":
       return {
-        ...state,
-        items: action.payload.items || [],
-        totalItems: action.payload.totalItems || 0,
-        totalAmount: action.payload.totalAmount || 0,
+        ...action.payload,
+        totalAmount: recalculateTotalAmount(action.payload.items || []),
       };
 
     default:
@@ -134,11 +123,9 @@ export function cartReducer(state: CartState, action: CartAction): CartState {
   }
 }
 
-// Provider component
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, initialState);
 
-  // Load cart from localStorage
   useEffect(() => {
     const savedCart = localStorage.getItem("cart");
     if (savedCart) {
@@ -147,14 +134,12 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
-  // Save cart to localStorage on state change
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(state));
   }, [state]);
 
-  // Action handlers
   const addItem = (item: CartItem) => {
-    if (!item.id || !item.name || item.price <= 0 || item.quantity <= 0) {
+    if (!item.id || !item.name || item.realPrice <= 0 || item.quantity <= 0) {
       toast({
         title: "Invalid item",
         description: "Failed to add item to cart. Check item details.",
@@ -201,7 +186,6 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Custom hook for using cart context
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
@@ -209,3 +193,4 @@ export function useCart() {
   }
   return context;
 }
+
