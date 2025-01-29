@@ -13,7 +13,7 @@ export default function Home() {
       <Products/>
       <Rooms/>
       <GallerySection/>
-      {/* <FeaturesSection/> */}
+      <FeaturesSection/>
     </section>
   );
 }
