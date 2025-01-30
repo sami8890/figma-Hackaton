@@ -1,46 +1,55 @@
-# Furniro - Modern E-commerce Website  
+# Furniro - Modern E-commerce Platform 🛋️
 
-Welcome to **Furniro**, a sleek and fully responsive e-commerce platform. This project was created as part of an assignment for **Sir Ameen Alam** and the **Gaiaic team**, combining thoughtful design and modern web technologies.  
+## Overview
+
+
+Furniro is a comprehensive e-commerce platform designed for furniture selling and shopping. Developed by Muhammad Sami (00490806) and its a part of an assignment from Sir Ameen Alam and the Gaiaic team, this project helped me to understand the key concept of nextjs gsap tailwind CSS sanity clerk stripe shipengine. and i also learn a lot of new things in this project. like how ecomerce website words in a real world and many more things. 
+
+## ✨ Key Features
+
+- **Responsive Design**: 9 fully responsive pages optimized for desktop, tablet, and mobile devices
+- **Product Management**: Seamless display of products with real-time inventory updates
+- **User Authentication**: Secure login and registration system using clerk
+- **Shopping Cart & Wishlist**: Dynamic management based on product availability using sanity cms
+- **Search & Filter**: Advanced product search discovery features
+- **Payment Integration**: Secure checkout process with Stripe
+- **Order Tracking**: Real-time shipment updates via ShipEngine API
+- **Review System**: Allows customers to provide feedback on products
+
+## 🛠️ The tools i use in this project
+
+- **Frontend**: Next.js 15
+- **Styling**: Tailwind CSS
+- **Animations**: GSAP (GreenSock Animation Platform)
+- **Content Management**: Sanity CMS
+- **Authentication**: Clerk
+- **Payment Processing**: Stripe
+- **Backend**: Sanity CMS
+- **Shipping**: ShipEngine API
+
+## 🏗️ System Architecture
+
+The Furniro platform is built on a modern, scalable architecture:
+
+- **Frontend**: Next.js provides a responsive and interactive user interface
+- **Backend**: Sanity CMS manages product information, user data, and order records
+- **APIs**: 
+  - ShipEngine for real-time shipping updates
+  - Stripe for secure payment processing
+- **Authentication**: Clerk handles user registration, login, and authentication and its so easy to implement  
+
+## 🔄 Key Workflows
+
+1. **User Registration**: Implemented through Clerk, integrated with Sanity CMS for data storage
+2. **Product Browsing**: Dynamic product listings fetched from Sanity CMS
+3. **Order Placement**: Seamless flow from cart to Stripe payment to order confirmation
+4. **Shipment Tracking**: Real-time order tracking provided by ShipEngine integration
+5. **Inventory Management**: Automated stock updates in Sanity CMS upon order completion
+
+## 🎯 Conclusion
+
+The Furniro e-commerce platform represents a significant milestone in creating a production-ready online shopping solution. It showcases the effective integration of Next.js, Tailwind CSS, and various third-party services to deliver a robust, user-friendly e-commerce experience.
 
 ---
 
-## 🌟 Project Highlights  
-- **9 Pages**: Includes all essential e-commerce features like product listing, cart, checkout, and more.  
-- **Fully Responsive**: Designed to look and work great on all devices—desktop, tablet, and mobile.  
-- **Pixel-Perfect Design**: Built to match the Figma template down to the last detail.  
-
----
-
-## 🚀 Tech Stack  
-- **Next.js 15**: For fast performance, seamless navigation, and SEO-friendly pages.  
-- **Tailwind CSS**: Used for clean, consistent, and mobile-friendly styling.  
-- **GSAP Animations**: Adds smooth, eye-catching animations for a better user experience.  
-
----
-
-## ✨ Features  
-- **Engaging Animations**: Hover effects and smooth transitions bring the design to life.  
-- **Performance Optimized**: Built to load quickly and work smoothly.  
-- **Easy to Work With**: A clean and modular code structure that’s simple to update or expand.  
-- **Responsive Design**: Every page adapts beautifully to different screen sizes.  
-
----
-
-## 💻 What’s Included  
-Here’s a quick overview of the pages:  
-1. **Home Page**: Welcomes users with a stylish hero section and featured products.  
-2. **Product Listing Page**: Displays items in a clean and organized grid.  
-3. **Product Details Page**: Showcases product information with smooth animations.  
-4. **Cart Page**: A user-friendly cart to manage selected items.  
-5. **Checkout Page**: A simple and intuitive flow for completing purchases.  
-...and more!  
-
----
-
-This is my first ever production ready website 
-This project showcases the skill of combining Next.js, Tailwind CSS, and GSAP. 
-
-
-
-
-
+**Developed by Muhammad Sami (00490806)** | *Assignment from GIAIC team and Sir Ameen Alam*
