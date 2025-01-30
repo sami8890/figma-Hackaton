@@ -1,6 +1,7 @@
+// components/Navbar.tsx
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { FiSearch, FiHeart, FiX, FiUser } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { Menu } from 'lucide-react';
 import { CartMenu } from "@/app/context/cart-menu";
 import { useCart } from "@/app/context/cart-context";
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs';
-
+import { useRouter } from "next/navigation";
 import {
   Sheet,
   SheetContent,
@@ -18,6 +19,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { getSuggestions } from "@/lib/products";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
@@ -28,9 +30,46 @@ const NAV_LINKS = [
 
 const Navbar: React.FC = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const router = useRouter();
+  const searchRef = useRef<HTMLDivElement>(null);
   useCart();
 
-  const toggleSearch = () => setIsSearchOpen(!isSearchOpen);
+  // Click outside handler
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/shop/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
+    }
+  };
+
+  const updateSuggestions = async (query: string) => {
+    if (query.length >= 1) { // Changed to 1 character
+      const results = await getSuggestions(query);
+      setSuggestions(results);
+    } else {
+      setSuggestions([]);
+    }
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => updateSuggestions(searchQuery), 200);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white shadow-sm">
@@ -60,31 +99,57 @@ const Navbar: React.FC = () => {
           ))}
         </nav>
 
-        <div className="flex items-center space-x-3 md:space-x-4">
+        <div className="flex items-center space-x-3 md:space-x-4" ref={searchRef}>
           {isSearchOpen ? (
-            <div className="relative">
-              <Input
-                type="text"
-                placeholder="Search products..."
-                className="pr-10 w-48 md:w-64"
-                aria-label="Search products"
-              />
+            <form onSubmit={handleSearch} className="relative">
+              <div className="relative">
+                <Input
+                  type="text"
+                  placeholder="Search products..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pr-10 w-48 md:w-64"
+                  aria-label="Search products"
+                  autoFocus
+                />
+                {suggestions.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white border rounded-lg shadow-lg z-50 max-h-60 overflow-auto">
+                    {suggestions.map((suggestion, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm text-black"
+                        onClick={() => {
+                          setSearchQuery(suggestion);
+                          router.push(`/shop/search?q=${encodeURIComponent(suggestion)}`);
+                          setIsSearchOpen(false);
+                        }}
+                      >
+                        {suggestion}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
               <Button
                 variant="ghost"
                 size="icon"
                 className="absolute right-0 top-1/2 -translate-y-1/2"
-                onClick={toggleSearch}
-                aria-label="Close search"
+                onClick={() => {
+                  setIsSearchOpen(false);
+                  setSearchQuery("");
+                }}
+                type="button"
               >
                 <FiX className="text-gray-500" />
               </Button>
-            </div>
+            </form>
           ) : (
             <div className="flex items-center space-x-3 md:space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={toggleSearch}
+                onClick={() => setIsSearchOpen(true)}
                 aria-label="Open search"
               >
                 <FiSearch className="text-black text-xl hover:text-orange-500 transition-colors" />
@@ -164,4 +229,3 @@ const Navbar: React.FC = () => {
 };
 
 export default Navbar;
-
