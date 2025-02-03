@@ -62,7 +62,7 @@ const rightImages: GalleryImage[] = [
     height: 400,
   },
   {
-    src: "/gallery-section/right4.png",
+    src: "/gallery-section/right3.png",
     alt: "Workspace corner",
     width: 600,
     height: 500,
