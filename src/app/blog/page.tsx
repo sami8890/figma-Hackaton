@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from "@/components/ui/input";
-import Banner from "@/components/ui/banner";
+import Banner from "@/components/main/banner";
 import { blogPosts, recentPosts, categories } from "./data";
 
 export default function BlogListing() {

@@ -1,9 +1,9 @@
-import BrowseTheImage from "@/components/ui/browse-by-cat";
-import Hero from "../components/ui/hero";
-import Products from "@/components/ui/our-products";
-import Rooms from "@/components/ui/beautifull-romms";
+import BrowseTheImage from "@/components/main/browse-by-cat";
+import Hero from "../components/main/hero";
+import Products from "@/components/main/our-products";
+import Rooms from "@/components/main/beautifull-romms";
 import FeaturesSection from "@/components/ui/why-choose-us";
-import GallerySection from "@/components/ui/Gallery-section";
+import GallerySection from "@/components/main/Gallery-section";
 
 export default function Home() {
   return (

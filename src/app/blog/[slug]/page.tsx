@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import Banner from "@/components/ui/banner";
+import Banner from "@/components/main/banner";
 import { blogPosts } from "../data";
 
 interface BlogPostProps {

@@ -17,7 +17,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import Banner from "@/components/ui/banner";
+import Banner from "@/components/main/banner";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);

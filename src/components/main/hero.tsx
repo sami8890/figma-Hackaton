@@ -1,6 +1,7 @@
 "use client";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -10,16 +11,27 @@ const Hero = () => {
   const contentRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLAnchorElement>(null);
   const [isHovered, setIsHovered] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  // Register ScrollTrigger plugin
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Memoized hover handler
+  const handleHover = useCallback((isHover: boolean) => {
+    setIsHovered(isHover);
+  }, []);
 
   useLayoutEffect(() => {
     if (!imageWrapperRef.current || !contentRef.current || !buttonRef.current) return;
 
+    // Initial animation timeline
     const tl = gsap.timeline({
       defaults: {
         ease: "power3.out",
       },
     });
 
+    // Set initial states
     gsap.set([imageWrapperRef.current, contentRef.current.children], {
       opacity: 0,
       y: 50,
@@ -30,6 +42,7 @@ const Hero = () => {
       opacity: 0,
     });
 
+    // Main animation sequence
     tl.to(imageWrapperRef.current, {
       opacity: 1,
       y: 0,
@@ -48,8 +61,21 @@ const Hero = () => {
         ease: "back.out(1.7)",
       }, "-=0.5");
 
+    // Add parallax effect
+    const parallax = gsap.to(imageWrapperRef.current, {
+      yPercent: 20,
+      ease: "none",
+      scrollTrigger: {
+        trigger: containerRef.current,
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    });
+
     return () => {
       tl.kill();
+      parallax.kill();
     };
   }, []);
 
@@ -88,7 +114,9 @@ const Hero = () => {
         <Image
           src="/hero-section-image.png"
           alt="Showcase of our latest furniture collection"
-          className="object-cover"
+          className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'
+            }`}
+          onLoadingComplete={() => setImageLoaded(true)}
           priority
           fill
           sizes="100vw"
@@ -129,8 +157,8 @@ const Hero = () => {
                    hover:bg-[#9E7B2A]
                    focus:ring-2 focus:ring-offset-2 focus:ring-[#B88E2F]
                    rounded-md"
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
+          onMouseEnter={() => handleHover(true)}
+          onMouseLeave={() => handleHover(false)}
         >
           <span className="inline-block">BUY NOW</span>
         </Link>
