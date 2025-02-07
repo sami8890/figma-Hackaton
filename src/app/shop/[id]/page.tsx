@@ -1,14 +1,19 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { use } from "react"
-import Image from "next/image"
-import { motion } from "framer-motion"
-import { Star, Minus, Plus, Heart } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { sanityFetch } from "@/sanity/lib/fetch"
-import { useCart } from "@/app/context/cart-context"
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { useState, useEffect } from "react";
+import { use } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
+import { Star, Minus, Plus, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { useCart } from "@/app/context/cart-context";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import {
   Dialog,
   DialogContent,
@@ -16,25 +21,25 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Progress } from "@/components/ui/progress"
-import { toast } from "@/hooks/use-toast"
+} from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
+import { toast } from "@/hooks/use-toast";
 
 // Define the Product type based on your Sanity schema
 type Product = {
-  _id: string
-  title: string
-  description: string
-  price: number
-  slug: string
-  imageUrl: string
-  discountPrice?: number
-  isNew: boolean
-  colors: string[]
-  tags: string[]
-  stock: number
-  inStock: boolean
-}
+  _id: string;
+  title: string;
+  description: string;
+  price: number;
+  slug: string;
+  imageUrl: string;
+  discountPrice?: number;
+  isNew: boolean;
+  colors: string[];
+  tags: string[];
+  stock: number;
+  inStock: boolean;
+};
 
 // Function to fetch a single product from Sanity
 const getProduct = async (id: string): Promise<Product | null> => {
@@ -51,29 +56,30 @@ const getProduct = async (id: string): Promise<Product | null> => {
     tags,
     stock,
     inStock
-  }`
+  }`;
 
-  const product = await sanityFetch({ query, params: { id } })
-  return product
-}
+  const product = await sanityFetch({ query, params: { id } });
+  return product;
+};
 
-export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = use(params)
-  const [product, setProduct] = useState<Product | null>(null)
-  const [quantity, setQuantity] = useState(1)
-  const [selectedSize, setSelectedSize] = useState("L")
-  const [selectedColor, setSelectedColor] = useState("")
-  const [selectedImage, setSelectedImage] = useState(0)
-  const [isWishlisted, setIsWishlisted] = useState(false)
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false)
-  const { addItem } = useCart()
+export default function ProductPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = use(params);
+  const [product, setProduct] = useState<Product | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [selectedSize, setSelectedSize] = useState("L");
+  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedImage, setSelectedImage] = useState(0);
+  const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  const { addItem } = useCart();
 
   useEffect(() => {
-    getProduct(id).then(setProduct)
-  }, [id])
-
- 
-
+    getProduct(id).then(setProduct);
+  }, [id]);
 
   const handleAddToCart = () => {
     if (product) {
@@ -86,21 +92,21 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         size: selectedSize,
         color: selectedColor || product.colors[0],
         image: product.imageUrl,
-      })
+      });
       toast({
         title: "Added to cart",
         description: `${quantity} x ${product.title} has been added to your cart.`,
-      })
+      });
     }
-  }
+  };
 
   const toggleWishlist = () => {
-    setIsWishlisted(!isWishlisted)
+    setIsWishlisted(!isWishlisted);
     toast({
       title: isWishlisted ? "Removed from wishlist" : "Added to wishlist",
       description: `${product?.title} has been ${isWishlisted ? "removed from" : "added to"} your wishlist.`,
-    })
-  }
+    });
+  };
 
   if (!product) {
     return (
@@ -113,16 +119,18 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <div className="h-12 bg-gray-200 rounded w-1/4"></div>
         </div>
       </div>
-    )
+    );
   }
 
-  const stockPercentage = (product.stock / 100) * 100 // Assuming max stock is 100
+  const stockPercentage = (product.stock / 100) * 100; // Assuming max stock is 100
 
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="flex flex-col lg:flex-row gap-8">
         <div className="lg:w-1/2">
-          <div className="relative aspect-[4/3] lg:aspect-[3/2] mb-4"> {/* Changed from aspect-square */}
+          <div className="relative aspect-[4/3] lg:aspect-[3/2] mb-4">
+            {" "}
+            {/* Changed from aspect-square */}
             <Image
               src={product.imageUrl || "/placeholder.svg"}
               alt={product.title}
@@ -133,22 +141,25 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             />
           </div>
           <div className="flex gap-2 overflow-x-auto">
-            {[product.imageUrl, product.imageUrl, product.imageUrl].map((img, index) => (
-              <button
-                key={index}
-                className={`relative w-16 lg:w-20 h-16 lg:h-20 rounded-md overflow-hidden ${selectedImage === index ? "ring-2 ring-[#B88E2F]" : ""
+            {[product.imageUrl, product.imageUrl, product.imageUrl].map(
+              (img, index) => (
+                <button
+                  key={index}
+                  className={`relative w-16 lg:w-20 h-16 lg:h-20 rounded-md overflow-hidden ${
+                    selectedImage === index ? "ring-2 ring-[#B88E2F]" : ""
                   }`}
-                onClick={() => setSelectedImage(index)}
-              >
-                <Image
-                  src={img || "/placeholder.svg"}
-                  alt={`${product.title} thumbnail ${index + 1}`}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 64px, 80px"
-                />
-              </button>
-            ))}
+                  onClick={() => setSelectedImage(index)}
+                >
+                  <Image
+                    src={img || "/placeholder.svg"}
+                    alt={`${product.title} thumbnail ${index + 1}`}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 64px, 80px"
+                  />
+                </button>
+              )
+            )}
           </div>
         </div>
 
@@ -166,7 +177,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
             </div>
             <span className="text-sm text-gray-500">4.0 (200 reviews)</span>
           </div>
-          <p className="text-2xl font-bold mb-4">Rs. {product.price.toLocaleString()}</p>
+          <p className="text-2xl font-bold mb-4">
+            Rs. {product.price.toLocaleString()}
+          </p>
 
           {/* Stock Progress Bar */}
           <div className="mb-4">
@@ -181,7 +194,9 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
           <div className="mb-6">
             <h3 className="font-semibold mb-2">Description</h3>
             <p className="text-gray-600">
-              {isDescriptionExpanded ? product.description : `${product.description.slice(0, 100)}...`}
+              {isDescriptionExpanded
+                ? product.description
+                : `${product.description.slice(0, 100)}...`}
             </p>
             <button
               onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
@@ -198,8 +213,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               {product.colors.map((color) => (
                 <motion.button
                   key={color}
-                  className={`w-10 h-10 rounded-full transition-all ${selectedColor === color ? "ring-2 ring-offset-2 ring-[#B88E2F]" : ""
-                    }`}
+                  className={`w-10 h-10 rounded-full transition-all ${
+                    selectedColor === color
+                      ? "ring-2 ring-offset-2 ring-[#B88E2F]"
+                      : ""
+                  }`}
                   style={{ backgroundColor: color }}
                   aria-label={`Select ${color} color`}
                   onClick={() => setSelectedColor(color)}
@@ -216,14 +234,20 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               <h3 className="font-semibold">Size</h3>
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="link" className="p-0 h-auto font-normal text-sm text-blue-600">
+                  <Button
+                    variant="link"
+                    className="p-0 h-auto font-normal text-sm text-blue-600"
+                  >
                     Size Guide
                   </Button>
                 </DialogTrigger>
                 <DialogContent>
                   <DialogHeader>
                     <DialogTitle>Size Guide</DialogTitle>
-                    <DialogDescription>Here&apos;s our size guide to help you find the perfect fit.</DialogDescription>
+                    <DialogDescription>
+                      Here&apos;s our size guide to help you find the perfect
+                      fit.
+                    </DialogDescription>
                   </DialogHeader>
                   {/* Add your size guide Content here */}
                 </DialogContent>
@@ -233,10 +257,11 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               {["S", "M", "L", "XL"].map((size) => (
                 <motion.button
                   key={size}
-                  className={`w-10 h-10 rounded border text-sm transition-colors ${selectedSize === size
+                  className={`w-10 h-10 rounded border text-sm transition-colors ${
+                    selectedSize === size
                       ? "bg-[#B88E2F] text-white border-[#B88E2F]"
                       : "border-gray-300 text-gray-700 hover:border-[#B88E2F]"
-                    }`}
+                  }`}
                   onClick={() => setSelectedSize(size)}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -266,8 +291,15 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
                 <Plus className="w-4 h-4" />
               </motion.button>
             </div>
-            <motion.div className="flex-grow" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-              <Button className="w-full bg-[#B88E2F] text-white hover:bg-[#A67D20]" onClick={handleAddToCart}>
+            <motion.div
+              className="flex-grow"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <Button
+                className="w-full bg-[#B88E2F] text-white hover:bg-[#A67D20]"
+                onClick={handleAddToCart}
+              >
                 Add To Cart
               </Button>
             </motion.div>
@@ -276,9 +308,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
               onClick={toggleWishlist}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              aria-label={isWishlisted ? "Remove from wishlist" : "Add to wishlist"}
+              aria-label={
+                isWishlisted ? "Remove from wishlist" : "Add to wishlist"
+              }
             >
-              <Heart className={`w-6 h-6 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-500"}`} />
+              <Heart
+                className={`w-6 h-6 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-500"}`}
+              />
             </motion.button>
           </div>
 
@@ -306,7 +342,6 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         </div>
       </div>
 
-      
       {/* Sticky Add to Cart for Mobile */}
       <motion.div
         className="fixed bottom-0 left-0 right-0 bg-white p-4 shadow-lg md:hidden"
@@ -314,11 +349,13 @@ export default function ProductPage({ params }: { params: Promise<{ id: string }
         animate={{ y: 0 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
       >
-        <Button className="w-full bg-[#B88E2F] text-white hover:bg-[#A67D20]" onClick={handleAddToCart}>
+        <Button
+          className="w-full bg-[#B88E2F] text-white hover:bg-[#A67D20]"
+          onClick={handleAddToCart}
+        >
           Add To Cart - Rs. {(product.price * quantity).toLocaleString()}
         </Button>
       </motion.div>
     </div>
-  )
+  );
 }
-

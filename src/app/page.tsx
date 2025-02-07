@@ -9,11 +9,11 @@ export default function Home() {
   return (
     <section className="bg-[#fcfcfc]">
       <Hero />
-      <BrowseTheImage/>
-      <Products/>
-      <Rooms/>
-      <GallerySection/>
-      <FeaturesSection/>
+      <BrowseTheImage />
+      <Products />
+      <Rooms />
+      <GallerySection />
+      <FeaturesSection />
     </section>
   );
 }
