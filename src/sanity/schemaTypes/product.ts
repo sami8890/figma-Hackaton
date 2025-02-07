@@ -1,73 +1,104 @@
-export default {
-    name: 'product',
-    type: 'document',
-    title: 'Product',
+//src/sanity/schemaTypes/product.ts
+import { defineField, defineType } from "sanity";
+import { TrolleyIcon } from "@sanity/icons";
+
+export const productApi = defineType({
+    name: "productss",
+    title: "Product",
+    type: "document",
+    icon: TrolleyIcon,
     fields: [
-        {
-            name: 'name',
-            type: 'string',
-            title: 'Product Name',
-        },
-        {
-            name: 'description',
-            type: 'string',
-            title: 'Description'
-        },
-        {
-            name: 'price',
-            type: 'number',
-            title: 'Product Price',
-        },
-        {
-            name: 'discountPercentage',
-            type: 'number',
-            title: 'Discount Percentage',
-        },
-        {
-            name: 'priceWithoutDiscount',
-            type: 'number',
-            title: 'Price Without Discount',
-            description: 'Original price before discount'
-        },
-        {
-            name: 'rating',
-            type: 'number',
-            title: 'Rating',
-            description: 'Rating of the product'
-        },
-        {
-            name: 'ratingCount',
-            type: 'number',
-            title: 'Rating Count',
-            description: 'Number of ratings'
-        },
-        {
-            name: 'tags',
-            type: 'array',
-            title: 'Tags',
-            of: [{ type: 'string' }],
+        defineField({
+            name: "title",
+            title: "Title",
+            type: "string",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "description",
+            title: "Description",
+            type: "text",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "productImage",
+            title: "Product Image",
+            type: "image",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "price",
+            title: "Price",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "tags",
+            title: "Tags",
+            type: "array",
+            of: [{ type: "string" }],
+        }),
+        defineField({
+            name: "isNew",
+            title: "New Badge",
+            type: "boolean",
+        }),
+        defineField({
+            name: "slug",
+            title: "Slug",
+            type: "slug",
             options: {
-                layout: 'tags'
+                source: "title",
+                maxLength: 200,
             },
-            description: 'Add tags like "new arrival", "bestseller", etc.'
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "inStock",
+            title: "In Stock",
+            type: "boolean",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "stock",
+            title: "Stock",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "reviews",
+            title: "Reviews",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "colors",
+            title: "Colors",
+            type: "array",
+            of: [{ type: "string" }],
+        }),
+        defineField({
+            name: "discountPrice",
+            title: "Discount Price",
+            type: "number",
+        }),
+    ],
+
+    preview: {
+        select: {
+            title: "title",
+            media: "productImage",
+            subtitle: "price",
+            inStock: "inStock",
+            stock: "stock",
         },
-        {
-            name: 'sizes',
-            type: 'array',
-            title: 'Sizes',
-            of: [{ type: 'string' }],
-            options: {
-                layout: 'tags'
-            },
-            description: 'Add sizes like S , M , L , XL , XXL'
+        prepare({ title, subtitle, media, inStock, stock }) {
+            return {
+                title,
+                subtitle: `${subtitle} | ${inStock ? `In Stock (${stock})` : "Out of Stock"}`,
+                media,
+            };
         },
-        {
-            name: 'image',
-            type: 'image',
-            title: 'Product Image',
-            options: {
-                hotspot: true // Enables cropping and focal point selection
-            }
-        }
-    ]
-};
+    },
+});
+

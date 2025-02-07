@@ -19,9 +19,9 @@ export default function Categories(): React.JSX.Element {
   const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const categories: Category[] = [
-    { title: "Dining", image: "/browse-images/bed.png" },
+    { title: "Dining", image: "/browse-images/guldasta.png" },
     { title: "Living", image: "/browse-images/browse.png" },
-    { title: "Bedroom", image: "/browse-images/guldasta.png" },
+    { title: "Bedroom", image: "/browse-images/bed.png" },
   ];
 
   useEffect(() => {

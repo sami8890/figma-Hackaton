@@ -7,7 +7,7 @@ import GallerySection from "@/components/main/Gallery-section";
 
 export default function Home() {
   return (
-    <section className="bg-[#fcfcfc] max-w-[80vw] mx-auto  ">
+    <section className="bg-[#fcfcfc]">
       <Hero />
       <BrowseTheImage/>
       <Products/>

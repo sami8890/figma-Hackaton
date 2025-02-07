@@ -1,9 +1,9 @@
-// //src/app/shop/page.tsx
+//src/app/shop/page.tsx
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { FaHeart, FaShareAlt, FaShoppingCart } from "react-icons/fa";
@@ -18,105 +18,52 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import Banner from "@/components/main/banner";
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { allProducts } from "@/sanity/lib/queries";
 
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
 // Define a type for the product to improve type safety
-interface Product {
-  id: number;
-  name: string;
+type Product = {
+  _id: string;
+  title: string;
   description: string;
-  price: string;
-  originalPrice?: string;
-  image: string;
-  badge?: string;
-  isNew?: boolean;
-}
+  price: number;
+  slug: string;
+  imageUrl: string;
+  discountPrice?: number;
+  isNew: boolean;
+  colors: string[];
+  tags: string[];
+  stock: number;
+  inStock: boolean;
+};
 
 const ShopSection: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([]);
   const productsRef = useRef<(HTMLDivElement | null)[]>([]);
   const bannerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const paginationRef = useRef<HTMLDivElement>(null);
   const sponsorRef = useRef<HTMLDivElement>(null);
 
-  const products: Product[] = [
-    {
-      id: 1,
-      name: "Syltherine",
-      description: "Stylish chair",
-      price: "Rp 2,500,000",
-      originalPrice: "Rp 3,000,000",
-      image: "/our-products/first.png",
-      badge: "-30%",
-      isNew: false,
-    },
-    {
-      id: 2,
-      name: "Leviosa",
-      description: "Stylish sofa chair",
-      price: "Rp 2,500,000",
-      image: "/our-products/second.png",
-      isNew: false,
-    },
-    {
-      id: 3,
-      name: "Lolito",
-      description: "Luxury big sofa",
-      price: "Rp 7,000,000",
-      originalPrice: "Rp 14,000,000",
-      image: "/our-products/third.png",
-      badge: "-50%",
-      isNew: false,
-    },
-    {
-      id: 4,
-      name: "Respira",
-      description: "Outdoor bar table and stool",
-      price: "Rp 500,000",
-      image: "/our-products/fourth.png",
-      isNew: true,
-    },
-    {
-      id: 5,
-      name: "Grifo",
-      description: "Night table",
-      price: "Rp 1,500,000",
-      originalPrice: "Rp 2,500,000",
-      image: "/our-products/fifth.png",
-      badge: "-39%",
-      isNew: false,
-    },
-    {
-      id: 6,
-      name: "Muggo",
-      description: "Small mug",
-      price: "Rp 150,000",
-      image: "/our-products/sixth.png",
-      isNew: true,
-    },
-    {
-      id: 7,
-      name: "Ping Pong",
-      description: "Ping pong table",
-      price: "Rp 7,000,000",
-      originalPrice: "Rp 10,000,000",
-      image: "/our-products/seventh.png",
-      badge: "-30%",
-      isNew: false,
-    },
-    {
-      id: 8,
-      name: "Fleex",
-      description: "Minimalist lamp",
-      price: "Rp 1,200,000",
-      image: "/our-products/eight.png",
-      isNew: true,
-    },
-  ];
+  // Fetch products from Sanity
+  const fetchProducts = async (): Promise<Product[]> => {
+    const products: Product[] = await sanityFetch({
+      query: allProducts,
+    });
+    return products;
+  };
 
+  // Fetch products once the component mounts
   useEffect(() => {
+    const loadProducts = async () => {
+      const fetchedProducts = await fetchProducts();
+      setProducts(fetchedProducts); // Set the products state
+    };
+    loadProducts();
+
     // Banner Animation
     if (bannerRef.current) {
       gsap.fromTo(
@@ -236,8 +183,8 @@ const ShopSection: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {products.map((product, index) => (
             <Link
-              key={product.id}
-              href={`/shop/${product.id}`}
+              key={product._id}
+              href={`/shop/${product._id}`}
               className="block"
             >
               <div
@@ -251,16 +198,22 @@ const ShopSection: React.FC = () => {
                 {/* Product Image */}
                 <div className="relative">
                   <Image
-                    src={product.image}
-                    alt={product.name}
+                    src={product.imageUrl}
+                    alt={product.title}
                     width={300}
                     height={288}
                     className="w-full h-72 object-cover"
                   />
                   {/* Badges */}
-                  {product.badge && (
+                  {product.discountPrice && (
                     <span className="absolute top-3 left-3 bg-red-500 text-white text-sm font-bold px-2 py-1 rounded-full">
-                      {product.badge}
+                      -
+                      {Math.round(
+                        ((product.price - product.discountPrice) /
+                          product.price) *
+                          100
+                      )}
+                      %
                     </span>
                   )}
                   {product.isNew && (
@@ -273,18 +226,20 @@ const ShopSection: React.FC = () => {
                 {/* Product Details */}
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-800">
-                    {product.name}
+                    {product.title}
                   </h3>
-                  <p className="text-gray-500 text-sm mb-2">
-                    {product.description}
+                  <p className="text-gray-500 text-sm mb-2 m-0.5">
+                    {product.tags}
                   </p>
                   <div className="flex items-center gap-2">
                     <p className="text-red-500 text-lg font-bold">
-                      {product.price}
+                      {product.discountPrice
+                        ? product.discountPrice
+                        : product.price}
                     </p>
-                    {product.originalPrice && (
+                    {product.discountPrice && (
                       <p className="text-gray-400 text-sm line-through">
-                        {product.originalPrice}
+                        {product.price}
                       </p>
                     )}
                   </div>
@@ -293,9 +248,12 @@ const ShopSection: React.FC = () => {
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   {/* Add to Cart Button */}
-                  <button className="bg-white text-orange-600 font-medium px-6 py-2 rounded-lg mb-3 flex items-center gap-2 hover:bg-orange-600 hover:text-white transition cursor-not-allowed">
+                  <button className="bg-white text-orange-600 font-medium px-6 py-2 rounded-lg mb-3 flex items-center gap-2 hover:bg-orange-600 hover:text-white transition
+                  
+                  ">
+                    
                     <FaShoppingCart />
-                    Add to Cart
+                    Show Details
                   </button>
 
                   {/* Icons */}
@@ -315,6 +273,7 @@ const ShopSection: React.FC = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         e.preventDefault();
+                        e.currentTarget.style.color = 'red';
                       }}
                     >
                       <FaHeart />
