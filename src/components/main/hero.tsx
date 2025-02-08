@@ -22,7 +22,8 @@ const Hero = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (!imageWrapperRef.current || !contentRef.current || !buttonRef.current) return;
+    if (!imageWrapperRef.current || !contentRef.current || !buttonRef.current)
+      return;
 
     // Initial animation timeline
     const tl = gsap.timeline({
@@ -48,18 +49,26 @@ const Hero = () => {
       y: 0,
       duration: 1.2,
     })
-      .to(contentRef.current.children, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.1,
-      }, "-=0.8")
-      .to(buttonRef.current, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "back.out(1.7)",
-      }, "-=0.5");
+      .to(
+        contentRef.current.children,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+        },
+        "-=0.8"
+      )
+      .to(
+        buttonRef.current,
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "back.out(1.7)",
+        },
+        "-=0.5"
+      );
 
     // Add parallax effect
     const parallax = gsap.to(imageWrapperRef.current, {
@@ -114,12 +123,14 @@ const Hero = () => {
         <Image
           src="/hero-section-image.png"
           alt="Showcase of our latest furniture collection"
-          className={`object-cover transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'
-            }`}
+          className={`object-cover transition-opacity duration-500 ${
+            imageLoaded ? "opacity-100" : "opacity-0"
+          }`}
           onLoadingComplete={() => setImageLoaded(true)}
           priority
           fill
           sizes="100vw"
+          // onLoad={() => ScrollTrigger.refresh()}
         />
       </div>
 
@@ -142,7 +153,8 @@ const Hero = () => {
         </h1>
 
         <p className="text-sm md:text-base leading-relaxed text-gray-700">
-          Explore premium quality with our latest designs. Find the perfect pieces to elevate your space.
+          Explore premium quality with our latest designs. Find the perfect
+          pieces to elevate your space.
         </p>
 
         <Link
