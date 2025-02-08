@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence, animate } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Eye,
   EyeOff,
@@ -86,7 +86,7 @@ const AuthComponent = () => {
       setTimeout(() => {
         setIsSuccess(false);
       }, 2000);
-    } catch (err: unknown) {
+    } catch {
       setError("An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
@@ -485,7 +485,7 @@ const AuthComponent = () => {
               >
                 {isLogin ? (
                   <span>
-                    Don't have an account?{" "}
+                    Don &apos;t have an account?{" "}
                     <span className="text-[#B88E2F] font-medium">Sign up</span>
                   </span>
                 ) : (

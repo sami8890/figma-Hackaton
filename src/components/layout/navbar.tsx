@@ -189,7 +189,7 @@ const Navbar: React.FC = () => {
                         </Button>
                       </SignInButton>
                     </TooltipTrigger>
-                    <TooltipContent sideOffset={5}>
+                    <TooltipContent sideOffset={5}> 
                       <p>Sign In</p>
                     </TooltipContent>
                   </Tooltip>
