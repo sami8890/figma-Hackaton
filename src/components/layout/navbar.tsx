@@ -1,70 +1,84 @@
-"use client"
+"use client";
 
-import type React from "react"
-import { useState, useEffect, useRef } from "react"
-import { FiSearch, FiHeart, FiX, FiUser } from "react-icons/fi"
-import Image from "next/image"
-import Link from "next/link"
-import { Menu } from "lucide-react"
-import { CartMenu } from "@/app/context/cart-menu"
-import { useCart } from "@/app/context/cart-context"
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
-import { useRouter } from "next/navigation"
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { getSuggestions } from "@/lib/products"
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import type React from "react";
+import { useState, useEffect, useRef } from "react";
+import { FiSearch, FiHeart, FiX, FiUser } from "react-icons/fi";
+import Image from "next/image";
+import Link from "next/link";
+import { Menu } from "lucide-react";
+import { CartMenu } from "@/app/context/cart-menu";
+import { useCart } from "@/app/context/cart-context";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useRouter } from "next/navigation";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { getSuggestions } from "@/lib/products";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
   { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
-] as const
+] as const;
 
 const Navbar: React.FC = () => {
-  const [isSearchOpen, setIsSearchOpen] = useState(false)
-  const [searchQuery, setSearchQuery] = useState("")
-  const [suggestions, setSuggestions] = useState<string[]>([])
-  const router = useRouter()
-  const searchRef = useRef<HTMLDivElement>(null)
-  useCart()
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const router = useRouter();
+  const searchRef = useRef<HTMLDivElement>(null);
+  useCart();
 
   // Click outside handler
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
-        setIsSearchOpen(false)
+      if (
+        searchRef.current &&
+        !searchRef.current.contains(event.target as Node)
+      ) {
+        setIsSearchOpen(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
-    return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     if (searchQuery.trim()) {
-      router.push(`/shop/search?q=${encodeURIComponent(searchQuery.trim())}`)
-      setIsSearchOpen(false)
-      setSearchQuery("")
+      router.push(`/shop/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setIsSearchOpen(false);
+      setSearchQuery("");
     }
-  }
+  };
 
   const updateSuggestions = async (query: string) => {
     if (query.length >= 1) {
-      const results = await getSuggestions(query)
-      setSuggestions(results)
+      const results = await getSuggestions(query);
+      setSuggestions(results);
     } else {
-      setSuggestions([])
+      setSuggestions([]);
     }
-  }
+  };
 
   useEffect(() => {
-    const timer = setTimeout(() => updateSuggestions(searchQuery), 200)
-    return () => clearTimeout(timer)
-  }, [searchQuery]) // Removed updateSuggestions from dependencies
+    const timer = setTimeout(() => updateSuggestions(searchQuery), 200);
+    return () => clearTimeout(timer);
+  }, [searchQuery]); // Removed updateSuggestions from dependencies
 
   return (
     <TooltipProvider delayDuration={0}>
@@ -78,7 +92,9 @@ const Navbar: React.FC = () => {
               height={32}
               className="transition-transform group-hover:scale-105"
             />
-            <h1 className="hidden md:block text-lg font-semibold text-black font-inter">Furniro</h1>
+            <h1 className="hidden md:block text-lg font-semibold text-black font-inter">
+              Furniro
+            </h1>
           </Link>
 
           <nav className="hidden md:flex space-x-8">
@@ -93,7 +109,10 @@ const Navbar: React.FC = () => {
             ))}
           </nav>
 
-          <div className="flex items-center space-x-3 md:space-x-4" ref={searchRef}>
+          <div
+            className="flex items-center space-x-3 md:space-x-4"
+            ref={searchRef}
+          >
             {isSearchOpen ? (
               <form onSubmit={handleSearch} className="relative">
                 <div className="relative">
@@ -114,9 +133,11 @@ const Navbar: React.FC = () => {
                           type="button"
                           className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm text-black"
                           onClick={() => {
-                            setSearchQuery(suggestion)
-                            router.push(`/shop/search?q=${encodeURIComponent(suggestion)}`)
-                            setIsSearchOpen(false)
+                            setSearchQuery(suggestion);
+                            router.push(
+                              `/shop/search?q=${encodeURIComponent(suggestion)}`
+                            );
+                            setIsSearchOpen(false);
                           }}
                         >
                           {suggestion}
@@ -130,8 +151,8 @@ const Navbar: React.FC = () => {
                   size="icon"
                   className="absolute right-0 top-1/2 -translate-y-1/2"
                   onClick={() => {
-                    setIsSearchOpen(false)
-                    setSearchQuery("")
+                    setIsSearchOpen(false);
+                    setSearchQuery("");
                   }}
                   type="button"
                 >
@@ -142,7 +163,12 @@ const Navbar: React.FC = () => {
               <div className="flex items-center space-x-3 md:space-x-4">
                 <Tooltip>
                   <TooltipTrigger asChild>
-                    <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(true)} aria-label="Open search">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setIsSearchOpen(true)}
+                      aria-label="Open search"
+                    >
                       <FiSearch className="text-black text-xl hover:text-orange-500 transition-colors" />
                     </Button>
                   </TooltipTrigger>
@@ -154,7 +180,11 @@ const Navbar: React.FC = () => {
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <SignInButton>
-                        <Button variant="ghost" size="icon" aria-label="Sign in">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          aria-label="Sign in"
+                        >
                           <FiUser className="text-black text-xl hover:text-orange-500 transition-colors" />
                         </Button>
                       </SignInButton>
@@ -190,8 +220,15 @@ const Navbar: React.FC = () => {
               <SheetContent side="right" className="w-[300px] bg-white">
                 <SheetHeader className="mb-6">
                   <div className="flex justify-center items-center space-x-2">
-                    <Image src="/navbar-logo.png" alt="Furniro Logo" width={40} height={25} />
-                    <SheetTitle className="text-xl font-semibold">Furniro</SheetTitle>
+                    <Image
+                      src="/navbar-logo.png"
+                      alt="Furniro Logo"
+                      width={40}
+                      height={25}
+                    />
+                    <SheetTitle className="text-xl font-semibold">
+                      Furniro
+                    </SheetTitle>
                   </div>
                 </SheetHeader>
 
@@ -229,8 +266,7 @@ const Navbar: React.FC = () => {
         </div>
       </header>
     </TooltipProvider>
-  )
-}
+  );
+};
 
-export default Navbar
-
+export default Navbar;
