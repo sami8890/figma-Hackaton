@@ -1,3 +1,4 @@
+//src/app/shop/search/page.tsx
 import { ProductCard } from "@/components/ui/product-card";
 import { searchProducts } from "@/lib/products";
 import Link from "next/link";

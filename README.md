@@ -1,49 +1,152 @@
-# Furniro - Modern E-commerce Platform 🛋️
+# Furniro - Modern E-commerce Platform 🏩
 
 ## Overview
 
-
-Furniro is a comprehensive e-commerce platform designed for furniture selling and shopping. 
-created by Muhammad Sami Roll number (00490806) 
-and its a part of an assignment from Sir Ameen Alam and the Gaiaic team, this project helped me to understand the key concept of nextjs gsap tailwind CSS sanity clerk stripe shipengine.
-and i also learn a lot of new things in this project. like how e-comerce website words in a real world and many more things. 
+Welcome to my Project **Furniro**.  
+Furniro is a best modern e-commerce platform designed for furniture selling and shopping experience.  
+This website is created by me, **Muhammad Sami** (Roll Number: **00490806**), as part of an assignment from **Sir Ameen Alam** and the **GIAIC team**. This project has helped me to understand key concepts of **Next.js 15 with TypeScript, GSAP, Tailwind CSS, Sanity CMS (backend), Clerk (authentication), and Stripe (payment processing).**  
+I have also learned a lot about how e-commerce websites work in the real world. and how to craete a complete e-commerce website from scratch. here is the some key features of this project that you can explore 
 
 ## ✨ Key Features
 
-- **Responsive Design**: 9 fully responsive pages optimized for desktop, tablet, and mobile devices
-- **Product Management**: Manage product using sanity .
-- **User Authentication**: Secure login and registration system using clerk
-- **Shopping Cart & Wishlist**: added *Shopping Cart functionality using context api and and store in a local storage .
-- **Search **: Advanced product searching products.
-- **Payment Integration**: Secure payment using Stripe 
-- **Review System**: Allows customers to provide feedback on products
+- **Responsive Design**: 9 fully responsive pages optimized for desktop, tablet, and mobile devices.
+- **Product Management**: Manage products using **Sanity Studio**, including adding and deleting items via **Sanity CMS**.
+- **User Authentication**: Secure login and registration system using **Clerk**.too easy to use but in the future i will migrate to **NextAuth.js** because it has more customization options. making it producrion ready 
 
+- **Shopping Cart & Wishlist**: Implemented shopping cart functionality using **Context API** and stored it in **local storage**.
+- **Payment Integration**: Secure payment using **Stripe**.
+- **Checkout Process**: Seamless checkout process integrating **Stripe** and **Sanity CMS**.
 
-## 🛠️ The tools i use in this project
+## 🛠️ Technologies Used
 
-- **Frontend**: Next.js 15
-- **Styling**: Tailwind CSS
-- **Animations**: GSAP (GreenSock Animation Platform)
-- **Content Management**: Sanity CMS
-- **Authentication**: Clerk
+- **Frontend**: Next.js 15 with TypeScript for building a fast, responsive, and interactive user experience.
+- **Styling**: Tailwind CSS for a modern and responsive design.
+- **Animations**: GSAP (GreenSock Animation Platform) – a lightweight and powerful animation library
+- **Content Management**: Sanity CMS 
+- **Authentication**: Clerk (with plans to migrate to NextAuth.js in the future)
 - **Payment Processing**: Stripe
-- **Backend**: Sanity CMS
-
-## 🏗️ System Architecture
+- **State Management**: Context API (for cart & wishlist)
 
 
-- **Frontend**: Next.js provides a responsive and interactive user interface
-- **Backend**: Sanity CMS manages product information, user data, and order records
-- **APIs**: 
-  - Stripe for secure payment processing
-  - using migration api for products .
-- **Authentication**: Clerk handles user registration, login, and authentication and its so easy to implement  
+## 💯 Product Schema (Sanity CMS)
+
+``` typeScript
+// src/sanity/schemaTypes/product.ts
+import { defineField, defineType } from "sanity";
+import { TrolleyIcon } from "@sanity/icons";
+
+export const productApi = defineType({
+    name: "productss",
+    title: "Product",
+    type: "document",
+    icon: TrolleyIcon,
+    fields: [
+        defineField({
+            name: "title",
+            title: "Title",
+            type: "string",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "description",
+            title: "Description",
+            type: "text",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "productImage",
+            title: "Product Image",
+            type: "image",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "price",
+            title: "Price",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "tags",
+            title: "Tags",
+            type: "array",
+            of: [{ type: "string" }],
+        }),
+        defineField({
+            name: "isNew",
+            title: "New Badge",
+            type: "boolean",
+        }),
+        defineField({
+            name: "slug",
+            title: "Slug",
+            type: "slug",
+            options: {
+                source: "title",
+                maxLength: 200,
+            },
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "inStock",
+            title: "In Stock",
+            type: "boolean",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "stock",
+            title: "Stock",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "reviews",
+            title: "Reviews",
+            type: "number",
+            validation: (rule) => rule.required(),
+        }),
+        defineField({
+            name: "colors",
+            title: "Colors",
+            type: "array",
+            of: [{ type: "string" }],
+        }),
+        defineField({
+            name: "discountPrice",
+            title: "Discount Price",
+            type: "number",
+        }),
+    ],
+
+    preview: {
+        select: {
+            title: "title",
+            media: "productImage",
+            subtitle: "price",
+            inStock: "inStock",
+            stock: "stock",
+        },
+        prepare({ title, subtitle, media, inStock, stock }) {
+            return {
+                title,
+                subtitle: `${subtitle} | ${inStock ? `In Stock (${stock})` : "Out of Stock"}`,
+                media,
+            };
+        },
+    },
+});
+```
+
+
+This is the schema for products . 
+
+
 
 ## 🎯 Conclusion
+This is the end of the **Furniro e-commerce platform**.readme file  
+The **Furniro e-commerce platform** make the life easy to buy furniture. 
+ 
 
-The Furniro e-commerce platform represents a significant milestone in creating a production-ready online shopping solution.
-It showcases the effective integration of Next.js, Tailwind CSS, and various third-party services to deliver a robust, user-friendly e-commerce experience.
+----------
 
----
-
-**Created  by Muhammad Sami (00490806)** | *Assignment from GIAIC team and Sir Ameen Alam*
+**Created by** **Muhammad Sami (00490806)**  
+*Assignment from the **GIAIC team** and **Sir Ameen Alam***
