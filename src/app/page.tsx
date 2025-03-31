@@ -4,7 +4,6 @@ import Products from "@/components/main/our-products";
 import Rooms from "@/components/main/beautifull-romms";
 import FeaturesSection from "@/components/ui/why-choose-us";
 import GallerySection from "@/components/main/Gallery-section";
-
 export default function Home() {
   return (
     <section className="bg-[#fcfcfc]">
@@ -14,6 +13,7 @@ export default function Home() {
       <Rooms />
       <GallerySection />
       <FeaturesSection />
+      
     </section>
   );
 }

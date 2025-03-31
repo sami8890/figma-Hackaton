@@ -1,177 +1,158 @@
-"use client";
-import React, { useEffect, useRef } from "react";
-import Image from "next/image";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+"use client"
 
-// Register ScrollTrigger plugin
-gsap.registerPlugin(ScrollTrigger);
+import { useState } from "react"
+import Image from "next/image"
+import { motion } from "framer-motion"
+import { ArrowRight } from "lucide-react"
 
-// Define type for category
-interface Category {
-  title: string;
-  image: string;
-}
+export default function BrowseRangeSection() {
+  const [hoveredCategory, setHoveredCategory] = useState<number | null>(null)
 
-export default function Categories(): React.JSX.Element {
-  // Create refs for section and individual category elements
-  const sectionRef = useRef<HTMLElement | null>(null);
-  const categoryRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const categories = [
+    {
+      name: "Dining",
+      description: "Elegant dining sets for memorable gatherings",
+      image: "/browse-images/bed.png",
+      itemCount: 124,
+      featured: "Artisan Crafted Tables",
+    },
+    {
+      name: "Living",
+      description: "Comfortable sofas and accent pieces for your living space",
+      image: "/browse-images/browse.png",
+      featured: "Designer Sofas",
+    },
+    {
+      name: "Bedroom",
+      description: "Serene bedroom furniture for restful nights",
+      image: "/browse-images/guldasta.png",
+      featured: "Luxury Bed Frames",
+    },
+  ]
 
-  const categories: Category[] = [
-    { title: "Dining", image: "/browse-images/guldasta.png" },
-    { title: "Living", image: "/browse-images/browse.png" },
-    { title: "Bedroom", image: "/browse-images/bed.png" },
-  ];
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
 
-  useEffect(() => {
-    // Ensure refs are not null before animating
-    if (!sectionRef.current) return;
-
-    // Animate section title
-    const titleElement = sectionRef.current.querySelector("h2");
-    const descriptionElement = sectionRef.current.querySelector("p");
-
-    if (titleElement) {
-      gsap.fromTo(
-        titleElement,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
-
-    // Animate section description
-    if (descriptionElement) {
-      gsap.fromTo(
-        descriptionElement,
-        { opacity: 0, y: 50 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          delay: 0.3,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-    }
-
-    // Animate category items
-    categoryRefs.current.forEach((categoryEl, index) => {
-      if (!categoryEl) return;
-
-      gsap.fromTo(
-        categoryEl,
-        {
-          opacity: 0,
-          scale: 0.8,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          scale: 1,
-          y: 0,
-          duration: 1,
-          delay: index * 0.2,
-          scrollTrigger: {
-            trigger: categoryEl,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          },
-        }
-      );
-
-      // Add hover and mouse interaction
-      const imageContainer = categoryEl.querySelector(".image-container");
-      const categoryTitle = categoryEl.querySelector("h3");
-
-      if (imageContainer && categoryTitle) {
-        // Hover effect
-        gsap.set(imageContainer, { transformOrigin: "center center" });
-
-        imageContainer.addEventListener("mouseenter", () => {
-          gsap.to(imageContainer, {
-            scale: 1.05,
-            rotation: 2,
-            duration: 0.3,
-            ease: "power1.inOut",
-          });
-          gsap.to(categoryTitle, {
-            color: "#007bff",
-            scale: 1.1,
-            duration: 0.3,
-          });
-        });
-
-        imageContainer.addEventListener("mouseleave", () => {
-          gsap.to(imageContainer, {
-            scale: 1,
-            rotation: 0,
-            duration: 0.3,
-            ease: "power1.inOut",
-          });
-          gsap.to(categoryTitle, {
-            color: "inherit",
-            scale: 1,
-            duration: 0.3,
-          });
-        });
-      }
-    });
-
-    // Cleanup function
-    return () => {
-      // Remove any event listeners or kill animations if needed
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
-    };
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+  }
 
   return (
-    <section ref={sectionRef} className="p-6 mt-24 max-w-[80vw] mx-auto">
-      <h2 className="text-3xl font-bold text-gray-900 text-center opacity-0">
-        Browse The Range
-      </h2>
-      <p className="text-center text-gray-500 opacity-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {categories.map((category, index) => (
-          <div
-            key={index}
-            ref={(el: HTMLDivElement | null) => {
-              categoryRefs.current[index] = el;
-            }}
-            className="flex flex-col items-center text-center space-y-4 opacity-0"
+    <section className="relative w-full bg-[#f9f5f0] py-16 md:py-24 overflow-hidden">
+      {/* Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/3 right-0 w-1/4 h-1/4 bg-amber-50 rounded-bl-[100px] opacity-70"></div>
+        <div className="absolute bottom-1/4 left-0 w-1/5 h-1/5 bg-amber-50 rounded-tr-[100px] opacity-70"></div>
+        <div className="absolute inset-0 bg-[url('/images/pattern.svg')] bg-repeat opacity-10"></div>
+      </div>
+
+      <div className="relative container mx-auto px-4">
+        {/* Section Header */}
+        <div className="text-center mb-12 md:mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
           >
-            {/* Image Container */}
-            <div className="image-container w-full h-[480px] flex items-center justify-center rounded-lg overflow-hidden shadow-md bg-gray-100 cursor-pointer">
-              <Image
-                src={category.image}
-                alt={`${category.title} category`}
-                width={381}
-                height={480}
-                className="rounded-lg transition-transform duration-300"
-              />
-            </div>
-            {/* Title */}
-            <h3 className="text-lg font-semibold transition-colors duration-300">
-              {category.title}
-            </h3>
-          </div>
-        ))}
+            <span className="inline-block px-3 py-1 rounded-full bg-amber-100 text-amber-800 text-xs font-semibold tracking-wide mb-3">
+              Our Collections
+            </span>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">Browse The Range</h2>
+            <div className="w-20 h-1 bg-amber-500 mx-auto mb-6"></div>
+            <p className="max-w-2xl mx-auto text-gray-600 text-lg">
+              Discover carefully curated furniture collections designed to transform your space with style and comfort.
+            </p>
+          </motion.div>
+        </div>
+
+        {/* Categories Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8"
+        >
+          {categories.map((category, index) => (
+            <motion.div
+              key={index}
+              variants={itemVariants}
+              onMouseEnter={() => setHoveredCategory(index)}
+              onMouseLeave={() => setHoveredCategory(null)}
+              className="group relative"
+            >
+              <div className="relative h-[400px] md:h-[500px] overflow-hidden rounded-2xl shadow-lg">
+                {/* Category Image */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent z-10"></div>
+                <Image
+                  src={category.image || "/placeholder.svg"}
+                  alt={category.name}
+                  fill
+                  className={`object-cover transition-transform duration-700 ${hoveredCategory === index ? "scale-110" : "scale-100"
+                    }`}
+                />
+
+                {/* Category Content */}
+                <div className="absolute inset-0 z-20 flex flex-col justify-end p-6 md:p-8">
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
+                   
+                    <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">{category.name}</h3>
+                    <p className="text-white/80 mb-4 max-w-xs">{category.description}</p>
+
+                    <div className="flex items-center justify-between">
+                      <span className="text-amber-300 text-sm font-medium">{category.featured}</span>
+                      <span className="w-10 h-10 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white group-hover:bg-amber-600 transition-colors duration-300">
+                        <ArrowRight size={18} className="transition-transform duration-300 group-hover:translate-x-1" />
+                      </span>
+                    </div>
+                  </motion.div>
+                </div>
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute -bottom-3 -right-3 w-16 h-16 rounded-full bg-amber-100 -z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* View All Button */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+          className="flex justify-center mt-12"
+        >
+          <button className="group relative overflow-hidden rounded-md bg-white border border-amber-200 px-8 py-3 text-amber-600 shadow-md transition-all duration-300 hover:bg-amber-600 hover:text-white hover:border-amber-600">
+            <span className="relative z-10 flex items-center font-medium">
+              View All Collections
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+            </span>
+            <span className="absolute inset-0 -z-10 bg-gradient-to-r from-amber-50 to-amber-100 opacity-0 transition-opacity duration-300 group-hover:opacity-0"></span>
+          </button>
+        </motion.div>
       </div>
     </section>
-  );
+  )
 }
+

@@ -24,6 +24,8 @@ const FilterSection: React.FC = () => {
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
+
+                
                 d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L14 12v6a1 1 0 01-.553.894l-4 2A1 1 0 019 20v-8L3.293 6.707A1 1 0 013 6V4z"
               />
             </svg>
