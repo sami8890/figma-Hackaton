@@ -19,7 +19,7 @@ import { sanityFetch } from "@/sanity/lib/fetch"
 const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/shop", label: "Shop" },
-  { href: "/blog", label: "Blog" },
+  // { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ] as const
 
